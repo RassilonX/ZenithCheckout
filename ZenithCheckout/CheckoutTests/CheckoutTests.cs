@@ -1,4 +1,5 @@
 using CheckoutLibrary;
+using System.Collections.Generic;
 
 namespace CheckoutLibraryTests;
 
@@ -72,9 +73,14 @@ public class CheckoutTests
 
         var result = checkout.GetScannedItems();
 
+        char[] keysToCheck = ['A', 'B', 'C', 'D'];
+
+        var allKeysPresent = keysToCheck.All(key => result.ContainsKey(key));
+
         //Assert
         Assert.Equal(4, result.Count);
         Assert.IsType<Dictionary<char, int>>(result);
+        Assert.True(allKeysPresent);
     }
 
     [Fact]
