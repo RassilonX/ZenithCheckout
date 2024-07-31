@@ -15,7 +15,7 @@ public class CheckoutTests
         };
 
     [Fact]
-    public void Checkout_NullItemPrice_SetsToEmptyDictionary()
+    public void Checkout_NullItemPriceInConstructor_SetsToEmptyDictionary()
     {
         //Arrange - Act
         var checkout = new Checkout(null);

@@ -21,7 +21,14 @@ public class Checkout : ICheckout
 
     public void Scan(char item)
     {
-
+        if (_scannedItems.ContainsKey(item))
+        {
+            _scannedItems[item]++;
+        }
+        else 
+        {
+            _scannedItems.Add(item, 1);
+        }
     }
 
     public int GetTotalPrice() 
