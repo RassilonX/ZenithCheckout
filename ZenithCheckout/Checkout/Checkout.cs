@@ -32,8 +32,15 @@ public class Checkout : ICheckout
     }
 
     public int GetTotalPrice() 
-    { 
-        return 0; 
+    {
+        int totalPrice = 0;
+
+        foreach (var item in _scannedItems)
+        {
+            totalPrice += _itemPrices[item.Key] * item.Value;
+        }
+
+        return totalPrice; 
     }
 
     //Test Helper Functions
