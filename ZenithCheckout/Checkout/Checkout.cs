@@ -12,11 +12,11 @@ namespace CheckoutLibrary;
 public class Checkout : ICheckout
 {
     private Dictionary<char, int> _scannedItems = new Dictionary<char, int>();
-    private readonly Dictionary<char, int> _itemPrices = new Dictionary<char, int>();
+    private readonly Dictionary<char, int> _itemPrices;
 
     public Checkout(Dictionary<char, int> itemPrices)
     {
-        _itemPrices = itemPrices;
+        _itemPrices = itemPrices ?? new Dictionary<char, int>();
     }
 
     public void Scan(char item)
