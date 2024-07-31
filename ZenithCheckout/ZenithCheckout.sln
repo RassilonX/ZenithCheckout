@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenithCheckout", "ZenithCheckout\ZenithCheckout.csproj", "{9C22FBC6-187F-40E9-872B-C4452677DC9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkout", "Checkout\Checkout.csproj", "{3244895E-9902-4E84-A71D-A77120FE40E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckoutLibrary", "Checkout\CheckoutLibrary.csproj", "{3244895E-9902-4E84-A71D-A77120FE40E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckoutTests", "CheckoutTests\CheckoutTests.csproj", "{4B136BD2-CBC2-4CEC-BE81-C4D50E60B662}"
 EndProject
