@@ -31,4 +31,5 @@ public class Checkout : ICheckout
 
     //Test Helper Functions
     internal Dictionary<char, int> GetScannedItems() { return _scannedItems; }
+    internal Dictionary<char, int> GetItemPrices() { return _itemPrices; }
 }

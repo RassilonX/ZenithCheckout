@@ -14,6 +14,32 @@ public class CheckoutTests
         };
 
     [Fact]
+    public void Checkout_NullItemPrice_SetsToEmptyDictionary()
+    {
+        //Arrange - Act
+        var checkout = new Checkout(null);
+
+        var result = checkout.GetItemPrices();
+
+        Assert.NotNull(result);
+        Assert.IsType<Dictionary<char, int>>(result);
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void Checkout_ItemPrice_SetsToProvidedDictionary()
+    {
+        //Arrange - Act
+        var checkout = new Checkout(_unitPrices);
+
+        var result = checkout.GetItemPrices();
+
+        Assert.NotNull(result);
+        Assert.IsType<Dictionary<char, int>>(result);
+        Assert.Equal(result, _unitPrices);
+    }
+
+    [Fact]
     public void Scan_ScanSingleItem_SingleItemPresentInScannedList()
     {
         //Arrange
@@ -49,6 +75,19 @@ public class CheckoutTests
         //Assert
         Assert.Equal(4, result.Count);
         Assert.IsType<Dictionary<char, int>>(result);
+    }
+
+    [Fact]
+    public void GetTotalPrice_NoItems()
+    {
+        //Arrange
+        var checkout = new Checkout(_unitPrices);
+
+        //Act
+        var result = checkout.GetTotalPrice();
+
+        //Assert
+        Assert.Equal(0, result);
     }
 
     [Fact]
