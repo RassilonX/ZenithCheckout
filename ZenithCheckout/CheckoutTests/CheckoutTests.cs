@@ -52,6 +52,22 @@ public class CheckoutTests
     }
 
     [Fact]
+    public void GetTotalPrice_SingleItemPrice()
+    {
+        //Arrange
+        var checkout = new Checkout(_unitPrices);
+
+        checkout.Scan('A');
+
+        //Act
+        var result = checkout.GetTotalPrice();
+        var sumTotal = _unitPrices['A'];
+
+        //Assert
+        Assert.Equal(sumTotal, result);
+    }
+
+    [Fact]
     public void GetTotalPrice_SumTotalPricesWithoutSpecialOffers()
     {
         //Arrange
