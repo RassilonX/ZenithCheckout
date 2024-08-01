@@ -78,7 +78,7 @@ public class CheckoutTests
     public void Scan_ScanSingleItem_SingleItemPresentInScannedList()
     {
         //Arrange
-        var checkout = new Checkout(_unitPrices);
+        var checkout = new Checkout(_unitPrices, _specialPrices);
 
         //Act
         checkout.Scan('A');
@@ -96,7 +96,7 @@ public class CheckoutTests
     public void Scan_ScanMultipleItems_MultipleItemsPresentInScannedList()
     {
         //Arrange
-        var checkout = new Checkout(_unitPrices);
+        var checkout = new Checkout(_unitPrices, _specialPrices);
         var listTotal = _unitPrices.Sum(x => x.Value);
 
         //Act
@@ -121,7 +121,7 @@ public class CheckoutTests
     public void GetTotalPrice_NoItems()
     {
         //Arrange
-        var checkout = new Checkout(_unitPrices);
+        var checkout = new Checkout(_unitPrices, _specialPrices);
 
         //Act
         var result = checkout.GetTotalPrice();
@@ -134,7 +134,7 @@ public class CheckoutTests
     public void GetTotalPrice_SingleItemPrice()
     {
         //Arrange
-        var checkout = new Checkout(_unitPrices);
+        var checkout = new Checkout(_unitPrices, _specialPrices);
 
         checkout.Scan('A');
 
@@ -150,7 +150,7 @@ public class CheckoutTests
     public void GetTotalPrice_SumTotalPricesWithoutSpecialOffers()
     {
         //Arrange
-        var checkout = new Checkout(_unitPrices);
+        var checkout = new Checkout(_unitPrices, _specialPrices);
 
         checkout.Scan('A');
         checkout.Scan('B');
@@ -163,5 +163,38 @@ public class CheckoutTests
 
         //Assert
         Assert.Equal(listTotal, result);
+    }
+
+    public static IEnumerable<object[]> TestData =>
+    new[]
+    {
+        new object[] { new char[] { 'A', 'A', 'A' }, 130 },
+        new object[] { new char[] { 'A', 'A', 'A', 'A' }, 180 },
+        new object[] { new char[] { 'A', 'A', 'A', 'A', 'A' }, 230 },
+        new object[] { new char[] { 'A', 'A', 'A', 'A', 'A', 'A' }, 260 },
+        new object[] { new char[] { 'A', 'A', 'A', 'B' }, 160 },
+        new object[] { new char[] { 'A', 'A', 'A', 'B', 'B' }, 175 },
+        new object[] { new char[] { 'A', 'A', 'A', 'B', 'B', 'D' }, 190 },
+        new object[] { new char[] { 'D', 'A', 'B', 'A', 'B', 'A' }, 190 },
+        // Add more test data here as appropriate
+    };
+
+    [Theory]
+    [MemberData(nameof(TestData))]
+    public void GetTotalPrice_SumTotalPricesWithSpecialOffers(char[] itemsToScan, int expectedTotal)
+    {
+        //Arrange
+        var checkout = new Checkout(_unitPrices, _specialPrices);
+
+        foreach (var item in itemsToScan) 
+        {
+            checkout.Scan(item);
+        }
+
+        //Act
+        var result = checkout.GetTotalPrice();
+
+        //Assert
+        Assert.Equal(expectedTotal, result);
     }
 }

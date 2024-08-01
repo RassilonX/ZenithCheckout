@@ -16,12 +16,6 @@ public class Checkout : ICheckout
     private readonly Dictionary<char, int> _itemPrices;
     private readonly Dictionary<char, SpecialPrice> _specialPrices;
 
-    public Checkout(Dictionary<char, int> itemPrices)
-    {
-        _itemPrices = itemPrices ?? new Dictionary<char, int>();
-        _specialPrices = new Dictionary<char, SpecialPrice>();
-    }
-
     public Checkout(Dictionary<char, int> itemPrices, Dictionary<char, SpecialPrice> specialPrices)
     {
         _itemPrices = itemPrices ?? new Dictionary<char, int>();
