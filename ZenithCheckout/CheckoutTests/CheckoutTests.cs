@@ -6,7 +6,7 @@ namespace CheckoutLibraryTests;
 
 public class CheckoutTests
 {
-    private readonly Dictionary<char, int> _unitPrices = 
+    private readonly Dictionary<char, int> _unitPrices =
         new Dictionary<char, int>
         {
             {'A', 50},
@@ -117,55 +117,37 @@ public class CheckoutTests
         Assert.True(allKeysPresent);
     }
 
-    [Fact]
-    public void GetTotalPrice_NoItems()
+    public static IEnumerable<object[]> NoSpecialOffersData =>
+    new[]
+    {
+        new object[] { new char[] { 'A' }, 50 },
+        new object[] { new char[] { 'A', 'B', 'C', 'D' }, 115 },
+        new object[] { new char[] { 'A', 'A', 'B', 'C', 'D' }, 165 },
+        new object[] { new char[] { 'A', 'B', 'A', 'C', 'D' }, 165 },
+        new object[] { new char[] { }, 0 },
+        // Add more test data here as appropriate
+    };
+
+    [Theory]
+    [MemberData(nameof(NoSpecialOffersData))]
+    public void GetTotalPrice_SumTotalPricesWithoutSpecialOffers(char[] itemsToScan, int expectedTotal)
     {
         //Arrange
         var checkout = new Checkout(_unitPrices, _specialPrices);
+
+        foreach (var item in itemsToScan)
+        {
+            checkout.Scan(item);
+        }
 
         //Act
         var result = checkout.GetTotalPrice();
 
         //Assert
-        Assert.Equal(0, result);
+        Assert.Equal(expectedTotal, result);
     }
 
-    [Fact]
-    public void GetTotalPrice_SingleItemPrice()
-    {
-        //Arrange
-        var checkout = new Checkout(_unitPrices, _specialPrices);
-
-        checkout.Scan('A');
-
-        //Act
-        var result = checkout.GetTotalPrice();
-        var sumTotal = _unitPrices['A'];
-
-        //Assert
-        Assert.Equal(sumTotal, result);
-    }
-
-    [Fact]
-    public void GetTotalPrice_SumTotalPricesWithoutSpecialOffers()
-    {
-        //Arrange
-        var checkout = new Checkout(_unitPrices, _specialPrices);
-
-        checkout.Scan('A');
-        checkout.Scan('B');
-        checkout.Scan('C');
-        checkout.Scan('D');
-
-        //Act
-        var result = checkout.GetTotalPrice();
-        var listTotal = _unitPrices.Sum(x => x.Value);
-
-        //Assert
-        Assert.Equal(listTotal, result);
-    }
-
-    public static IEnumerable<object[]> TestData =>
+    public static IEnumerable<object[]> SpecialOffersData =>
     new[]
     {
         new object[] { new char[] { 'A', 'A', 'A' }, 130 },
@@ -180,13 +162,13 @@ public class CheckoutTests
     };
 
     [Theory]
-    [MemberData(nameof(TestData))]
+    [MemberData(nameof(SpecialOffersData))]
     public void GetTotalPrice_SumTotalPricesWithSpecialOffers(char[] itemsToScan, int expectedTotal)
     {
         //Arrange
         var checkout = new Checkout(_unitPrices, _specialPrices);
 
-        foreach (var item in itemsToScan) 
+        foreach (var item in itemsToScan)
         {
             checkout.Scan(item);
         }
