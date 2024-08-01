@@ -52,13 +52,26 @@ public class CheckoutTests
     public void Checkout_ItemPrice_SetsToProvidedDictionary()
     {
         //Arrange - Act
-        var checkout = new Checkout(_unitPrices);
+        var checkout = new Checkout(_unitPrices, _specialPrices);
 
         var result = checkout.GetItemPrices();
 
         Assert.NotNull(result);
         Assert.IsType<Dictionary<char, int>>(result);
         Assert.Equal(result, _unitPrices);
+    }
+
+    [Fact]
+    public void Checkout_SpecialPrice_SetsToProvidedDictionary()
+    {
+        //Arrange - Act
+        var checkout = new Checkout(_unitPrices, _specialPrices);
+
+        var result = checkout.GetSpecialPrices();
+
+        Assert.NotNull(result);
+        Assert.IsType<Dictionary<char, SpecialPrice>>(result);
+        Assert.Equal(result, _specialPrices);
     }
 
     [Fact]
