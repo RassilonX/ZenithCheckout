@@ -28,7 +28,7 @@ var services = new ServiceCollection();
 
 services.AddSingleton(_unitPrices);
 services.AddSingleton(_specialPrices);
-services.AddScoped<ICheckout, Checkout>();
+services.AddSingleton<ICheckout, Checkout>();
 
 var serviceProvider = services.BuildServiceProvider();
 
@@ -36,4 +36,26 @@ var serviceProvider = services.BuildServiceProvider();
 //Program implementation
 var checkout = serviceProvider.GetService<ICheckout>();
 
-Console.WriteLine("Hello, World!");
+bool scanningItems = true;
+
+Console.WriteLine("Please begin scanning items");
+Console.WriteLine("When you are done please press enter on a blank line");
+
+while (scanningItems)
+{
+    string itemToScan = Console.ReadLine();
+
+    if(string.IsNullOrEmpty(itemToScan))
+    {
+        break;
+    }
+
+    Console.WriteLine($"Scanning item: {itemToScan}");
+    checkout.Scan(itemToScan[0]);
+}
+
+Console.WriteLine("Calculating total");
+
+var totalPrice = checkout.GetTotalPrice();
+
+Console.WriteLine($"Total Price: {totalPrice}");
