@@ -1,4 +1,5 @@
 ﻿using CheckoutLibrary.Interfaces;
+using CheckoutLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,18 @@ public class Checkout : ICheckout
 {
     private Dictionary<char, int> _scannedItems = new Dictionary<char, int>();
     private readonly Dictionary<char, int> _itemPrices;
+    private readonly Dictionary<char, SpecialPrice> _specialPrices;
 
     public Checkout(Dictionary<char, int> itemPrices)
     {
         _itemPrices = itemPrices ?? new Dictionary<char, int>();
+        _specialPrices = new Dictionary<char, SpecialPrice>();
+    }
+
+    public Checkout(Dictionary<char, int> itemPrices, Dictionary<char, SpecialPrice> specialPrices)
+    {
+        _itemPrices = itemPrices ?? new Dictionary<char, int>();
+        _specialPrices = specialPrices ?? new Dictionary<char, SpecialPrice>();
     }
 
     public void Scan(char item)
@@ -46,4 +55,5 @@ public class Checkout : ICheckout
     //Test Helper Functions
     internal Dictionary<char, int> GetScannedItems() { return _scannedItems; }
     internal Dictionary<char, int> GetItemPrices() { return _itemPrices; }
+    internal Dictionary<char, SpecialPrice> GetSpecialPrices() { return _specialPrices; }
 }

@@ -1,4 +1,5 @@
 using CheckoutLibrary;
+using CheckoutLibrary.Models;
 using System.Collections.Generic;
 
 namespace CheckoutLibraryTests;
@@ -18,12 +19,25 @@ public class CheckoutTests
     public void Checkout_NullItemPriceInConstructor_SetsToEmptyDictionary()
     {
         //Arrange - Act
-        var checkout = new Checkout(null);
+        var checkout = new Checkout(null, null);
 
         var result = checkout.GetItemPrices();
 
         Assert.NotNull(result);
         Assert.IsType<Dictionary<char, int>>(result);
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void Checkout_NullSpecialPriceInConstructor_SetsToEmptyDictionary()
+    {
+        //Arrange - Act
+        var checkout = new Checkout(null, null);
+
+        var result = checkout.GetSpecialPrices();
+
+        Assert.NotNull(result);
+        Assert.IsType<Dictionary<char, SpecialPrice>>(result);
         Assert.Empty(result);
     }
 
