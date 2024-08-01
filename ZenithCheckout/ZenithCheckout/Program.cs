@@ -59,3 +59,6 @@ Console.WriteLine("Calculating total");
 var totalPrice = checkout.GetTotalPrice();
 
 Console.WriteLine($"Total Price: {totalPrice}");
+
+Console.WriteLine("Press any key to close...");
+Console.ReadKey(true);
