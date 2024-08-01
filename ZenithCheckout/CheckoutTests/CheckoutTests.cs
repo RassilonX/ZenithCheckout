@@ -15,6 +15,13 @@ public class CheckoutTests
             {'D', 15}
         };
 
+    private readonly Dictionary<char, SpecialPrice> _specialPrices =
+        new Dictionary<char, SpecialPrice>
+        {
+            {'A', new SpecialPrice(3, 130) },
+            {'B', new SpecialPrice(2, 45) }
+        };
+
     [Fact]
     public void Checkout_NullItemPriceInConstructor_SetsToEmptyDictionary()
     {
