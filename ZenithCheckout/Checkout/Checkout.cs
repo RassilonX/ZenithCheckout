@@ -40,10 +40,19 @@ public class Checkout : ICheckout
 
         foreach (var item in _scannedItems)
         {
-            totalPrice += _itemPrices[item.Key] * item.Value;
+            totalPrice += CalculateTotal(item.Key, item.Value);
         }
 
         return totalPrice; 
+    }
+
+    private int CalculateTotal(char item, int amount)
+    {
+        int total = 0;
+
+        total += _itemPrices[item] * amount;
+
+        return total;
     }
 
     //Test Helper Functions
