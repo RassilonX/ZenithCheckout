@@ -54,6 +54,28 @@ public class CheckoutFactoryTests
     }
 
     [Fact]
+    public void GetService_EmptyNameCheckout_ReturnsCorrectCheckoutInstance()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var checkouts = new[]
+        {
+            ("", new Dictionary<char, int> { { 'A', 10 } }, new Dictionary<char, SpecialPrice> { { 'A', new SpecialPrice(3, 20) } }),
+        };
+        CheckoutFactory.RegisterCheckouts(services, checkouts);
+
+        // Act
+        var serviceProvider = services.BuildServiceProvider();
+        var anonymousCheckout = CheckoutFactory.GetService(serviceProvider, "");
+
+        // Assert
+        Assert.NotNull(anonymousCheckout);
+        Assert.IsAssignableFrom<Checkout>(anonymousCheckout);
+
+        CheckoutFactory.ResetCheckoutDictionary();
+    }
+
+    [Fact]
     public void GetService_ThrowsException_WhenCheckoutNameIsNotFound()
     {
         // Arrange
