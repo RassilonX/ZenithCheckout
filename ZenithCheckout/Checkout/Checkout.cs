@@ -24,6 +24,10 @@ public class Checkout : ICheckout
 
     public void Scan(char item)
     {
+        if (!_itemPrices.ContainsKey(item))
+            throw new ArgumentException("Item doesn't exist in the price catalogue");
+
+
         if (_scannedItems.ContainsKey(item))
         {
             _scannedItems[item]++;
