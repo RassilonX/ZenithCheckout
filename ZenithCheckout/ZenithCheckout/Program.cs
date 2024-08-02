@@ -1,7 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using CheckoutLibrary;
-using CheckoutLibrary.Interfaces;
 using CheckoutLibrary.Models;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,15 +25,13 @@ var _specialPrices =
 
 var services = new ServiceCollection();
 
-services.AddSingleton(_unitPrices);
-services.AddSingleton(_specialPrices);
-services.AddSingleton<ICheckout, Checkout>();
-
+CheckoutFactory.RegisterCheckouts(services,
+    ("default", _unitPrices, _specialPrices));
 var serviceProvider = services.BuildServiceProvider();
 
 
 //Program implementation
-var checkout = serviceProvider.GetService<ICheckout>();
+var checkout = CheckoutFactory.GetService(serviceProvider, "default");
 
 bool scanningItems = true;
 
