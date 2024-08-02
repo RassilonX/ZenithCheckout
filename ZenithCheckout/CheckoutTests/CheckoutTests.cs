@@ -1,6 +1,5 @@
 using CheckoutLibrary;
 using CheckoutLibrary.Models;
-using System.Collections.Generic;
 
 namespace CheckoutLibraryTests;
 
