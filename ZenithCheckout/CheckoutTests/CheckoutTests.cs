@@ -1,6 +1,5 @@
 using CheckoutLibrary;
 using CheckoutLibrary.Models;
-using System.Collections.Generic;
 
 namespace CheckoutLibraryTests;
 
@@ -115,6 +114,17 @@ public class CheckoutTests
         Assert.Equal(4, result.Count);
         Assert.IsType<Dictionary<char, int>>(result);
         Assert.True(allKeysPresent);
+    }
+
+
+    [Fact]
+    public void Scan_ItemNotInPriceList_ThrowsArgumentException()
+    {
+        //Arrange
+        var checkout = new Checkout(_unitPrices, _specialPrices);
+
+        //Act - Assert
+        Assert.Throws<ArgumentException>(() => checkout.Scan('E'));
     }
 
     public static IEnumerable<object[]> NoSpecialOffersData =>

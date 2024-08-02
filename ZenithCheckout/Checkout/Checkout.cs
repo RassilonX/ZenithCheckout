@@ -1,11 +1,6 @@
 ﻿using CheckoutLibrary.Interfaces;
 using CheckoutLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("CheckoutTests")]
 namespace CheckoutLibrary;
@@ -24,14 +19,14 @@ public class Checkout : ICheckout
 
     public void Scan(char item)
     {
+        if (!_itemPrices.ContainsKey(item))
+            throw new ArgumentException("Item doesn't exist in the price catalogue");
+
+
         if (_scannedItems.ContainsKey(item))
-        {
             _scannedItems[item]++;
-        }
         else 
-        {
             _scannedItems.Add(item, 1);
-        }
     }
 
     public int GetTotalPrice() 
