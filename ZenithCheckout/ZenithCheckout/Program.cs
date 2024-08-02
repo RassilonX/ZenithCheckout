@@ -50,8 +50,15 @@ while (scanningItems)
         break;
     }
 
-    Console.WriteLine($"Scanning item: {itemToScan}");
-    checkout.Scan(itemToScan[0]);
+    try
+    {
+        Console.WriteLine($"Scanning item: {itemToScan}");
+        checkout.Scan(itemToScan[0]);
+    }
+    catch (Exception ex) 
+    {
+        Console.WriteLine($"{ex.Message}");
+    }
 }
 
 Console.WriteLine("Calculating total");
